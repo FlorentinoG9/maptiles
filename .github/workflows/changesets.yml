@@ -3,7 +3,6 @@ name: Changesets
 on:
   push:
     branches:
-      - main
       - master
 
 permissions:
