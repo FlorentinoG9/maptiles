@@ -58,7 +58,6 @@ jobs:
       - name: Create Version PR
         uses: changesets/action@v1
         with:
-          publish: bun run changeset:publish
           version: bun run changeset:version
           commit: "chore: version packages"
           title: "chore: version packages"
@@ -88,6 +87,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Configure npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build
         run: bun run build
