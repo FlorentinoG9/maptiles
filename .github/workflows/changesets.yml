@@ -20,12 +20,16 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout
+      - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
-      - name: Fetch base branch
-        run: git fetch origin master
+      - name: Fetch master branch
+        run: |
+          git fetch origin master:master
+          # Verify master branch exists
+          git show-ref master || git show-ref refs/heads/master
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
