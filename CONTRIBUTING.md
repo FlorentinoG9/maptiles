@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your interest in contributing to `@vibe/pmtiles-map`! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to `maptiles`! This document provides guidelines and instructions for contributing.
 
 ## Development Setup
 

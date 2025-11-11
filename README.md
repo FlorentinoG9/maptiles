@@ -1,4 +1,4 @@
-# @vibe/pmtiles-map
+# maptiles
 
 A React component for rendering maps using PMTiles and MapLibre GL JS with OpenStreetMap support.
 
@@ -17,13 +17,13 @@ A React component for rendering maps using PMTiles and MapLibre GL JS with OpenS
 ## Installation
 
 ```bash
-bun add @vibe/pmtiles-map maplibre-gl pmtiles
+bun add maptiles maplibre-gl pmtiles
 # or
-npm install @vibe/pmtiles-map maplibre-gl pmtiles
+npm install maptiles maplibre-gl pmtiles
 # or
-yarn add @vibe/pmtiles-map maplibre-gl pmtiles
+yarn add maptiles maplibre-gl pmtiles
 # or
-pnpm add @vibe/pmtiles-map maplibre-gl pmtiles
+pnpm add maptiles maplibre-gl pmtiles
 ```
 
 **Note:** The package includes `@protomaps/basemaps` as a dependency, so you don't need to install it separately. However, if you want to use custom flavors, you can import `namedFlavor` and other utilities directly from `@protomaps/basemaps`.
@@ -31,8 +31,8 @@ pnpm add @vibe/pmtiles-map maplibre-gl pmtiles
 ## Quick Start
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import 'maptiles/styles';
 // MapLibre GL CSS is automatically included, no need to import separately
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
 }
 ```
 
-**Note:** The component automatically imports MapLibre GL CSS. You only need to import `@vibe/pmtiles-map/styles` for the component's custom styles.
+**Note:** The component automatically imports MapLibre GL CSS. You only need to import `maptiles/styles` for the component's custom styles.
 
 ## Props
 
@@ -80,8 +80,8 @@ function App() {
 ### Basic Usage
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import 'maptiles/styles';
 
 function BasicMap() {
   return (
@@ -101,8 +101,8 @@ function BasicMap() {
 The package supports Protomaps basemap flavors for easy theme switching:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import 'maptiles/styles';
 
 function ThemedMaps() {
   return (
@@ -164,9 +164,9 @@ function ThemedMaps() {
 You can also use a custom flavor object from `@protomaps/basemaps`:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
+import { PMTilesMap } from 'maptiles';
 import { namedFlavor } from '@protomaps/basemaps';
-import '@vibe/pmtiles-map/styles';
+import 'maptiles/styles';
 
 function CustomFlavorMap() {
   // Override specific colors in a flavor
@@ -192,8 +192,8 @@ function CustomFlavorMap() {
 ### Multi-language Support
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import 'maptiles/styles';
 
 function MultiLanguageMap() {
   return (
@@ -216,9 +216,9 @@ function MultiLanguageMap() {
 Add custom markers to your map with icons, popups, and event handlers:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import type { MarkerPin } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import type { MarkerPin } from 'maptiles';
+import 'maptiles/styles';
 
 function MapWithMarkers() {
   const markers: MarkerPin[] = [
@@ -266,9 +266,9 @@ function MapWithMarkers() {
 You can use a custom HTML element as a marker icon:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import type { MarkerPin } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import type { MarkerPin } from 'maptiles';
+import 'maptiles/styles';
 
 function CustomHTMLMarker() {
   // Create a custom HTML element for the marker
@@ -307,9 +307,9 @@ function CustomHTMLMarker() {
 Set a default icon for all markers:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import type { MarkerPin } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import type { MarkerPin } from 'maptiles';
+import 'maptiles/styles';
 
 function MapWithDefaultIcon() {
   const markers: MarkerPin[] = [
@@ -345,9 +345,9 @@ function MapWithDefaultIcon() {
 Create draggable markers with drag event handlers:
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import type { MarkerPin } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import type { MarkerPin } from 'maptiles';
+import 'maptiles/styles';
 import { useState } from 'react';
 
 function DraggableMarkers() {
@@ -409,9 +409,9 @@ The `MarkerPin` interface supports the following properties:
 ### With Custom Style
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
+import { PMTilesMap } from 'maptiles';
 import type { StyleSpecification } from 'maplibre-gl';
-import '@vibe/pmtiles-map/styles';
+import 'maptiles/styles';
 
 function CustomStyledMap() {
   const customStyle: StyleSpecification = {
@@ -443,9 +443,9 @@ function CustomStyledMap() {
 ### With Event Handlers
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
+import { PMTilesMap } from 'maptiles';
 import type { Map } from 'maplibre-gl';
-import '@vibe/pmtiles-map/styles';
+import 'maptiles/styles';
 
 function MapWithHandlers() {
   const handleMapLoad = (map: Map) => {
@@ -474,8 +474,8 @@ function MapWithHandlers() {
 ### With Custom Map Options
 
 ```tsx
-import { PMTilesMap } from '@vibe/pmtiles-map';
-import '@vibe/pmtiles-map/styles';
+import { PMTilesMap } from 'maptiles';
+import 'maptiles/styles';
 
 function MapWithOptions() {
   return (

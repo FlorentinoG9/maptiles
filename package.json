@@ -1,5 +1,5 @@
 {
-	"name": "@vibe/pmtiles-map",
+	"name": "maptiles",
 	"version": "1.0.0",
 	"description": "A React component for rendering maps using PMTiles and MapLibre GL JS with OpenStreetMap support",
 	"type": "module",
