@@ -68,47 +68,64 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     needs: version
-    if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore: version packages') }}"
+    if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Check if version commit exists
+        id: check_version
+        run: |
+          if git log --oneline -10 | grep -q "chore: version packages"; then
+            echo "version_commit=true" >> $GITHUB_OUTPUT
+          else
+            echo "version_commit=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Bun
+        if: steps.check_version.outputs.version_commit == 'true'
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
       - name: Install dependencies
+        if: steps.check_version.outputs.version_commit == 'true'
         run: bun install --frozen-lockfile
 
       - name: Configure Git
+        if: steps.check_version.outputs.version_commit == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Configure npm
+        if: steps.check_version.outputs.version_commit == 'true'
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build
+        if: steps.check_version.outputs.version_commit == 'true'
         run: bun run build
 
       - name: Publish to npm
+        if: steps.check_version.outputs.version_commit == 'true'
         run: bun run changeset:publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Get version from package.json
+        if: steps.check_version.outputs.version_commit == 'true'
         id: package-version
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get changelog
+        if: steps.check_version.outputs.version_commit == 'true'
         id: changelog
         run: |
           if [ -f "CHANGELOG.md" ]; then
@@ -122,6 +139,7 @@ jobs:
           fi
 
       - name: Create GitHub Release
+        if: steps.check_version.outputs.version_commit == 'true'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.package-version.outputs.version }}
