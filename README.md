@@ -567,13 +567,36 @@ This project uses:
 
 ### Making Changes
 
+**Easiest way (single command):**
+```bash
+# After making your changes, run:
+bun run save
+```
+This will automatically:
+- Stage all changes
+- Prompt to add a changeset if none exists
+- Commit using Commitizen
+
+**Or step-by-step:**
 1. Create a branch and make your changes
-2. Add a changeset:
+2. Stage your changes:
    ```bash
+   git add .
+   ```
+3. Add a changeset:
+   ```bash
+   # Shortcut (recommended)
+   bun run cs
+   
+   # Or full command
    bun run changeset:add
    ```
-3. Commit using Commitizen:
+4. Commit using Commitizen:
    ```bash
+   # Shortcut (recommended)
+   bun run c
+   
+   # Or full command
    bun run commit
    ```
    Or manually follow the [Conventional Commits](https://www.conventionalcommits.org/) format
@@ -596,7 +619,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines.
 
 This project uses Changesets for automated versioning and releases:
 
-1. **Adding Changes**: When you make changes, add a changeset with `bun run changeset:add`
+1. **Adding Changes**: When you make changes, add a changeset with `bun run cs` (or `bun run changeset:add`)
 2. **Automated Versioning**: GitHub Actions automatically creates version PRs when changesets are merged
 3. **Automated Publishing**: When version PRs are merged, packages are automatically published to npm
 

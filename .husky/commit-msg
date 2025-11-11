@@ -1,5 +1,23 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-bun run commitlint --edit $1
+# Validate commit message format
+bun run commitlint --edit "$1"
+
+# If commitlint fails, exit with error
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Commit message validation failed!"
+  echo "💡 Commit messages must follow the Conventional Commits format:"
+  echo "   <type>(<scope>): <subject>"
+  echo ""
+  echo "   Examples:"
+  echo "   - feat: add new feature"
+  echo "   - fix(map): resolve center prop issue"
+  echo "   - docs: update readme"
+  echo ""
+  echo "   Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+  echo ""
+  exit 1
+fi
 

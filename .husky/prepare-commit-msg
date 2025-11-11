@@ -1,0 +1,59 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Only process manual commits (not commitizen, merge, or rebase)
+COMMIT_MSG_FILE="$1"
+COMMIT_SOURCE="$2"
+
+# Skip if using commitizen or merge/rebase
+if [ "$COMMIT_SOURCE" = "commitizen" ] || [ "$COMMIT_SOURCE" = "merge" ] || [ "$COMMIT_SOURCE" = "squash" ] || [ "$COMMIT_SOURCE" = "rebase" ]; then
+  exit 0
+fi
+
+# Read the commit message (first line only, strip comments)
+COMMIT_MSG=$(head -n 1 "$COMMIT_MSG_FILE" | sed 's/^#.*//' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+# Skip if empty
+if [ -z "$COMMIT_MSG" ]; then
+  exit 0
+fi
+
+# Check if message already follows conventional format
+if echo "$COMMIT_MSG" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?:"; then
+  exit 0
+fi
+
+# Auto-detect commit type based on message content
+SUGGESTED_TYPE="chore"
+CLEAN_MSG=$(echo "$COMMIT_MSG" | sed 's/\.$//')
+
+# Detect type based on keywords (order matters - more specific first)
+if echo "$CLEAN_MSG" | grep -qiE "(import|add|include).*(css|style|stylesheet)"; then
+  SUGGESTED_TYPE="style"
+elif echo "$CLEAN_MSG" | grep -qiE "(reorganize|reorder|restructure|refactor)"; then
+  SUGGESTED_TYPE="refactor"
+elif echo "$CLEAN_MSG" | grep -qiE "(fix|resolve|correct|repair|bug|error|issue|problem)"; then
+  SUGGESTED_TYPE="fix"
+elif echo "$CLEAN_MSG" | grep -qiE "(add|new|implement|create|introduce|feature)"; then
+  SUGGESTED_TYPE="feat"
+elif echo "$CLEAN_MSG" | grep -qiE "(doc|readme|comment|guide|documentation)"; then
+  SUGGESTED_TYPE="docs"
+elif echo "$CLEAN_MSG" | grep -qiE "(style|format|indent|whitespace|prettier)"; then
+  SUGGESTED_TYPE="style"
+elif echo "$CLEAN_MSG" | grep -qiE "(perf|performance|optimize|speed)"; then
+  SUGGESTED_TYPE="perf"
+elif echo "$CLEAN_MSG" | grep -qiE "(test|spec|testing)"; then
+  SUGGESTED_TYPE="test"
+elif echo "$CLEAN_MSG" | grep -qiE "(build|dependencies|package)"; then
+  SUGGESTED_TYPE="build"
+elif echo "$CLEAN_MSG" | grep -qiE "(ci|github|workflow|action)"; then
+  SUGGESTED_TYPE="ci"
+fi
+
+# Append suggestion as a comment (won't be included in commit)
+echo "" >> "$COMMIT_MSG_FILE"
+echo "# 💡 Suggested format: $SUGGESTED_TYPE: $CLEAN_MSG" >> "$COMMIT_MSG_FILE"
+echo "#    (Remove this comment and use the suggested format above)" >> "$COMMIT_MSG_FILE"
+
+exit 0
+
