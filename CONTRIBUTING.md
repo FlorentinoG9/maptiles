@@ -52,13 +52,17 @@ docs(readme): update installation instructions
 
 ### Using Commitizen
 
-We recommend using Commitizen for creating commits:
+We recommend using Commitizen for creating commits. You can use either the full command or the shortcut:
 
 ```bash
+# Full command
 bun run commit
+
+# Shortcut (easier!)
+bun run c
 ```
 
-This will guide you through creating a properly formatted commit message.
+This will guide you through creating a properly formatted commit message interactively.
 
 ## Making Changes
 
@@ -69,9 +73,18 @@ This will guide you through creating a properly formatted commit message.
 
 2. Make your changes
 
-3. Add a changeset (required for versioning):
+3. Stage your changes:
    ```bash
+   git add .
+   ```
+
+4. Add a changeset (required for versioning):
+   ```bash
+   # Full command
    bun run changeset:add
+   
+   # Shortcut (easier!)
+   bun run cs
    ```
    
    Select the appropriate version bump:
@@ -79,17 +92,20 @@ This will guide you through creating a properly formatted commit message.
    - **Minor**: New features (backwards compatible)
    - **Patch**: Bug fixes (backwards compatible)
 
-4. Commit your changes:
+5. Commit your changes:
    ```bash
-   bun run commit
-   ```
+   # Easiest: Single command (stages, adds changeset if needed, commits)
+   bun run save
    
-   Or manually:
-   ```bash
+   # Or step-by-step:
+   # Using Commitizen (recommended)
+   bun run c
+   
+   # Or manually (must follow conventional commit format)
    git commit -m "feat: your feature description"
    ```
 
-5. Push and create a Pull Request
+6. Push and create a Pull Request
 
 ## Versioning and Releases
 
@@ -97,9 +113,13 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ### Adding a Changeset
 
-When making changes, you must add a changeset:
+When making changes, you must add a changeset. Use the shortcut for convenience:
 
 ```bash
+# Shortcut (recommended)
+bun run cs
+
+# Or full command
 bun run changeset:add
 ```
 
@@ -111,6 +131,50 @@ Releases are automated via GitHub Actions:
 
 1. When changesets are merged to `main`, a PR is automatically created to version packages
 2. Once the version PR is merged, packages are automatically published to npm
+
+## Quick Reference
+
+### Common Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `bun run save` | - | **One command to rule them all!** Stage, add changeset (if needed), and commit |
+| `bun run commit` | `bun run c` | Create a commit with Commitizen |
+| `bun run changeset:add` | `bun run cs` | Add a changeset for versioning |
+| `bun run typecheck` | - | Check TypeScript types |
+| `bun run build` | - | Build the project |
+
+### Typical Workflow
+
+**Option 1: Single Command (Easiest!)**
+```bash
+# 1. Make your changes
+# ... edit files ...
+
+# 2. Save everything (stages, adds changeset if needed, commits)
+bun run save
+
+# 3. Push
+git push
+```
+
+**Option 2: Step-by-Step**
+```bash
+# 1. Make your changes
+# ... edit files ...
+
+# 2. Stage changes
+git add .
+
+# 3. Add changeset (if needed)
+bun run cs
+
+# 4. Commit
+bun run c
+
+# 5. Push
+git push
+```
 
 ## Code Style
 
