@@ -4,9 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+      - master
 
 permissions:
   contents: write
@@ -36,7 +34,7 @@ jobs:
   version:
     name: Version Packages
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
